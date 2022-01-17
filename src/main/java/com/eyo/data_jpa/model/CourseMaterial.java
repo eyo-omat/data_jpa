@@ -10,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "course_material")
 @Entity(name = "CourseMaterial")
+@ToString(exclude = "course")
 public class CourseMaterial {
 
     @Id
@@ -27,10 +28,13 @@ public class CourseMaterial {
     @Column(name = "url", nullable = false, columnDefinition = "TEXT")
     private String url;
 
-    @OneToOne
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(
             name = "course_id",
-            referencedColumnName = "course_id"
+            referencedColumnName = "courseId"
     )
     private Course course;
 }
