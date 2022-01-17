@@ -1,6 +1,7 @@
 package com.eyo.data_jpa.repository;
 
 import com.eyo.data_jpa.model.Course;
+import com.eyo.data_jpa.model.Student;
 import com.eyo.data_jpa.model.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,30 @@ class CourseRepositoryTest {
         List<Course> courses = courseRepository.findByTitleContaining("I", firstPageTEnRecords).getContent();
 
         System.out.println("Courses: " + courses);
+    }
+
+    @Test
+    public void saveCourseWithStudentAndTeacher() {
+        Teacher teacher = Teacher.builder()
+                .firstName("Kudu")
+                .lastName("Jaw")
+                .build();
+
+        Student student = Student.builder()
+                .firstName("ifuk")
+                .lastName("Julson")
+                .email("bula@mail")
+                .age(36)
+                .build();
+
+        Course course = Course.builder()
+                .title("Java")
+                .credit(9)
+                .teacher(teacher)
+                .build();
+
+        course.addStudents(student);
+
+        courseRepository.save(course);
     }
 }

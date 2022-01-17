@@ -3,6 +3,8 @@ package com.eyo.data_jpa.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -43,5 +45,27 @@ public class Course {
             referencedColumnName = "teacherId"
     )
     private Teacher teacher;
+
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "student_course_mapping",
+            joinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "courseId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "id",
+                    referencedColumnName = "id"
+            )
+
+    )
+    private List<Student> students;
+
+    public void addStudents(Student student) {
+        if (students == null) students = new ArrayList<>();
+        students.add(student);
+    }
 
 }
