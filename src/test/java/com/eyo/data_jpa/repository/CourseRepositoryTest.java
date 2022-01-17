@@ -5,6 +5,9 @@ import com.eyo.data_jpa.model.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -37,5 +40,43 @@ class CourseRepositoryTest {
                 .build();
 
         courseRepository.save(course);
+    }
+
+    @Test
+    public void findAllPagination() {
+        PageRequest firstPageWithThreeRecords = PageRequest.of(0, 3);
+        PageRequest secondPageWithTwoRecords = PageRequest.of(1, 2);
+
+        List<Course> courses = courseRepository.findAll(firstPageWithThreeRecords).getContent();
+
+        long totalElements = courseRepository.findAll(firstPageWithThreeRecords).getTotalElements();
+
+        long pages = courseRepository.findAll(firstPageWithThreeRecords).getTotalPages();
+
+        System.out.println("Total Elements: " + totalElements);
+        System.out.println("Total Pages: " + pages);
+        System.out.println("Courses: " + courses);
+
+    }
+
+    @Test
+    public void findAllSorting() {
+        PageRequest sortByTitle = PageRequest.of(0, 2, Sort.by("title"));
+        PageRequest sortByCreditDesc = PageRequest.of(0, 2, Sort.by("credit").descending());
+        PageRequest sortByTitleAndCreditDesc = PageRequest.of(0, 2, Sort.by("title").descending().and(Sort.by("credit")));
+
+        List<Course> courses = courseRepository.findAll(sortByTitle).getContent();
+
+        System.out.println("Courses: " + courses);
+
+    }
+
+    @Test
+    public void getByTitleContaining() {
+        Pageable firstPageTEnRecords = PageRequest.of(0, 10);
+
+        List<Course> courses = courseRepository.findByTitleContaining("I", firstPageTEnRecords).getContent();
+
+        System.out.println("Courses: " + courses);
     }
 }
