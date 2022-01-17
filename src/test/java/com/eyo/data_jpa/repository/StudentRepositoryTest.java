@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,5 +53,49 @@ class StudentRepositoryTest {
         List<Student> studentList = studentRepository.findAll();
 
         System.out.println("Student List: " + studentList);
+    }
+
+    @Test
+    public void getStudentByFirstName() {
+        List<Student> students = studentRepository.findByFirstName("kojo");
+
+        System.out.println("Student List: " + students);
+    }
+
+    @Test
+    public void getStudentLikeName() {
+        List<Student> students = studentRepository.findByFirstNameContaining("jo");
+
+        System.out.println("Student List: " + students);
+    }
+
+    @Test
+    public void getStudentByGuardianName() {
+        List<Student> students = studentRepository.findByGuardianName("Thanos");
+
+        System.out.println("Student List: " + students);
+    }
+
+    @Test
+    public void getStudentByFirstNameAndLastName() {
+        List<Student> students = studentRepository.findByFirstNameAndLastName("jojo", "nuke");
+
+        System.out.println("Student List: " + students);
+    }
+
+    @Test
+    public void getStudentByEmail() {
+        Optional<Student> student = studentRepository.findByEmail("joke@mail.com");
+
+        assert student.isPresent();
+        System.out.println("Student List: " + student);
+    }
+
+    @Test
+    public void getStudentFirstNameByEmail() {
+        Optional<Student> student = studentRepository.findStudentFirstNameByEmail("joke@mail.com");
+
+        assert student.isPresent();
+        System.out.println("First Name: " + student.get());
     }
 }
