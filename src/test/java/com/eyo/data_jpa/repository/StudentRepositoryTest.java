@@ -93,9 +93,22 @@ class StudentRepositoryTest {
 
     @Test
     public void getStudentFirstNameByEmail() {
-        Optional<Student> student = studentRepository.findStudentFirstNameByEmail("joke@mail.com");
+        String studentFirstName = studentRepository.getStudentFirstNameByEmail("joke@mail.com");
 
-        assert student.isPresent();
-        System.out.println("First Name: " + student.get());
+        System.out.println("First Name: " + studentFirstName);
+    }
+
+    @Test
+    public void getStudentByEmailNative() {
+        Student student = studentRepository.getStudentByEmail("joke@mail.com");
+
+        System.out.println("Student: " + student);
+    }
+
+    @Test
+    public void getStudentByEmailNamedParam() {
+        Student student = studentRepository.getStudentByEmail("joke@mail.com");
+
+        System.out.println("Student: " + student);
     }
 }

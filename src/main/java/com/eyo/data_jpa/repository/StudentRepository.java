@@ -3,6 +3,7 @@ package com.eyo.data_jpa.repository;
 import com.eyo.data_jpa.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +26,19 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Student> findByEmail(String email);
 
     @Query("select s.firstName from Student s where s.email = ?1")
-    Optional<Student> findStudentFirstNameByEmail(String email);
+    String getStudentFirstNameByEmail(String email);
 
+    //Native Query
+    @Query(
+            value = "select * from student s where s.email = ?1",
+            nativeQuery = true
+    )
+    Student getStudentByEmail(String email);
+
+    //Native Named Param
+    @Query(
+            value = "select * from student s where s.email = :email",
+            nativeQuery = true
+    )
+    Student getStudentByEmailNameParams(@Param("email") String email);
 }
