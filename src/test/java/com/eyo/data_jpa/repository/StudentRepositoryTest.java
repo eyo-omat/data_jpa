@@ -1,5 +1,6 @@
 package com.eyo.data_jpa.repository;
 
+import com.eyo.data_jpa.model.Guardian;
 import com.eyo.data_jpa.model.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,25 @@ class StudentRepositoryTest {
                 .lastName("duncan")
                 .email("kjk@mail.com")
                 .age(76)
-                .guardianName("Thanos")
-                .guardianEmail("snap@mail.com")
-                .guardianMobile("0.5")
+                .build();
+
+        studentRepository.save(student);
+    }
+
+    @Test
+    public void saveStudentWithGuardian() {
+        Guardian guardian = Guardian.builder()
+                        .name("Hulk")
+                .email("gamma@mail.com")
+                .mobile("8373")
+                .build();
+
+        Student student = Student.builder()
+                .firstName("Jojo")
+                .lastName("nuke")
+                .email("joke@mail.com")
+                .age(39)
+                .guardian(guardian)
                 .build();
 
         studentRepository.save(student);

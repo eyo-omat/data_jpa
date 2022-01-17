@@ -45,15 +45,6 @@ public class Student {
     @NonNull
     private Integer age;
 
-    @Column(name = "guardian_name", nullable = false, columnDefinition = "TEXT")
-    @NonNull
-    private String guardianName;
-
-    @Column(name = "guardian_email", nullable = false, columnDefinition = "TEXT")
-    @NonNull
-    private String guardianEmail;
-
-    @Column(name = "guardian_mobile", nullable = false, columnDefinition = "TEXT")
-    @NonNull
-    private String guardianMobile;
+    @Embedded
+    private Guardian guardian;
 }
