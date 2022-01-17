@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name = "student", uniqueConstraints = {@UniqueConstraint(name = "student_email_unique", columnNames = "email")})
 @Entity(name = "Student")
 public class Student {
 
@@ -26,9 +26,18 @@ public class Student {
             generator = "student_sequence"
 
     )
+    @Column(name = "id", updatable = false)
     private Long id;
+
+    @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
     private String firstName;
+
+    @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
     private String lastName;
+
+    @Column(name = "email", nullable = false, columnDefinition = "TEXT")
     private String email;
+
+    @Column(name = "age", nullable = false)
     private Integer age;
 }
