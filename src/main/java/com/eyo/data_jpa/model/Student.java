@@ -1,16 +1,16 @@
-package com.eyo.data_jpa;
+package com.eyo.data_jpa.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "student", uniqueConstraints = {@UniqueConstraint(name = "student_email_unique", columnNames = "email")})
 @Entity(name = "Student")
 public class Student {
@@ -30,14 +30,30 @@ public class Student {
     private Long id;
 
     @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
+    @NonNull
     private String firstName;
 
     @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
+    @NonNull
     private String lastName;
 
     @Column(name = "email", nullable = false, columnDefinition = "TEXT")
+    @NonNull
     private String email;
 
     @Column(name = "age", nullable = false)
+    @NonNull
     private Integer age;
+
+    @Column(name = "guardian_name", nullable = false, columnDefinition = "TEXT")
+    @NonNull
+    private String guardianName;
+
+    @Column(name = "guardian_email", nullable = false, columnDefinition = "TEXT")
+    @NonNull
+    private String guardianEmail;
+
+    @Column(name = "guardian_mobile", nullable = false, columnDefinition = "TEXT")
+    @NonNull
+    private String guardianMobile;
 }
